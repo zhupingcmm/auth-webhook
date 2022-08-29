@@ -22,7 +22,7 @@ const start =() => {
             log.info('request info:', req.query, req.url, req.body);
             const customerConfig:Config = {
                 method: 'GET',
-                headers: {'Accept': 'application/vnd.github+json', 'Authorization': 'token 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'},
+                headers: {'Accept': 'application/vnd.github+json', 'Authorization': 'token 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'},
             }
             const response = await fetch('https://api.github.com/user', {...customerConfig});
             req.send(await response.json());
