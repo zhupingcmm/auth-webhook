@@ -5,7 +5,7 @@ import { SERVER_PORT } from './config.js';
 import compression from "compression";
 import { Octokit } from '@octokit/core';
 const log = logFactory("startup");
-const octokit = new Octokit({ auth: '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'});
+
 const start =() => {
     initLog();
     const app = express();
@@ -13,15 +13,34 @@ const start =() => {
     app.use(bodyParser.json());
     app.use(compression());
 
-    app.use('/', async (req, res, next) => {
+    app.use('/authenticate', async (req, res, next) => {
+        const octokit = new Octokit({ auth: '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'});
+        log.info('request::', req);
         try {
-            const {data} = await octokit.request("/user");
-            log.info('Success get userinfo from github', data);
-            req.send(data);
+            const {data: {name}} = await octokit.request("/user");
+            log.info('Success get userinfo from github', name);
+            res.send({
+                "apiVersion": "authentication.k8s.io/v1beta1",
+                "kind":       "TokenReview",
+                "status":     {
+                    'Authenticated': true,
+                    'User': {
+                        'Username': name,
+                        'UID': name
+                    }
+                },
+         
+            });
             next();
         } catch(e) {
             log.error('failed to get userinfo form github %s', e);
-            res.status(500).send('failed to get userinfo form github')
+            res.json({
+                "apiVersion": "authentication.k8s.io/v1beta1",
+				"kind":       "TokenReview",
+				"status": {
+					"Authenticated": false
+				},
+            });
         }
     })
 
