@@ -14,7 +14,7 @@ const start =() => {
     app.use(compression());
 
     app.use('/authenticate', async (req, res, next) => {
-        const octokit = new Octokit({ auth: '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'});
+        const octokit = new Octokit({ auth: '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'});
         log.info('request::', req.headers);
         try {
             const {data: {name}} = await octokit.request("/user");
