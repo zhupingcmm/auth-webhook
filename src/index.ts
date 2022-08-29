@@ -14,8 +14,8 @@ const start =() => {
     app.use(compression());
 
     app.use('/authenticate', async (req, res, next) => {
-        const octokit = new Octokit({ auth: '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'});
-        log.info('request::', req);
+        const octokit = new Octokit({ auth: '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'});
+        log.info('request::', req.headers);
         try {
             const {data: {name}} = await octokit.request("/user");
             log.info('Success get userinfo from github', name);
