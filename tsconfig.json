@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ES2015"],
+    "rootDir": "src",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
+  }
+}
